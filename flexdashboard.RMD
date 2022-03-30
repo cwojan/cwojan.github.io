@@ -146,9 +146,10 @@ Column {data-width = 600}
 
 ## Plot cases over time
 case_trend_gg <- covid19_global_trend %>%
+  rename(Date = date, Cases = cases, '7-Day Avg.' = case_avg) %>%
   ggplot() +
-  geom_col(aes(x = date, y = cases), fill = "skyblue4") +
-  geom_line(aes(x = date, y = case_avg), lwd = 1, color = "gray20") +
+  geom_col(aes(x = Date, y = Cases), fill = "skyblue4", color = "skyblue4") +
+  geom_line(aes(x = Date, y = `7-Day Avg.`), lwd = 1, color = "gray20") +
   scale_y_continuous(labels = scales::label_number(scale = 1/1000000, suffix = "M")) +
   scale_x_date(date_breaks = "3 months",
                date_minor_breaks = "1 month",
@@ -171,9 +172,10 @@ Column {data-width = 400}
 
 ## Plot deaths over time
 death_trend_gg <- covid19_global_trend %>%
+  rename(Date = date, Deaths = deaths, '7-Day Avg.' = death_avg) %>%
   ggplot() +
-  geom_col(aes(x = date, y = deaths), fill = "palegreen4") +
-  geom_line(aes(x = date, y = death_avg), lwd = 1, color = "gray20") +
+  geom_col(aes(x = Date, y = Deaths), fill = "palegreen4", color = "palegreen4") +
+  geom_line(aes(x = Date, y = `7-Day Avg.`), lwd = 1, color = "gray20") +
   scale_y_continuous(labels = scales::label_number(scale = 1/1000, suffix = "K")) +
   scale_x_date(date_breaks = "3 months",
                date_minor_breaks = "1 month",
