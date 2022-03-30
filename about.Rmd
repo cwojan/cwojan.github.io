@@ -1,0 +1,7 @@
+---
+title: "About"
+---
+
+<font size="4"> 
+The navigation bar above provides access to my CV, Github, Google Scholar page, and email address. Feel free to reach out!
+</font>

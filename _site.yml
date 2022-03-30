@@ -1,0 +1,27 @@
+name: "Yay internet!"
+header-includes: 
+  \usepackage{graphicx}
+  \usepackage{float}
+output_dir: "."
+navbar:
+  title: "Home"
+  right:
+    - text: "About"
+      href: about.html
+    - text: "Professional Documents"
+      menu:
+        - text: "Curriculum Vitae"
+          href: ./files/wojan_cv_20220327.pdf
+    - text: "Recent Work"
+      menu:
+        - text: "Covid-19 Dashboard"
+          href: flexdashboard.html
+    - icon: fa-envelope fa-lg
+      href: mailto:<wojan002@umn.edu>
+    - icon: fa-github fa-lg
+      href: http://github.com/cwojan/
+    - icon: fa-solid fa-graduation-cap
+      href: https://scholar.google.com/citations?user=In-rb2IAAAAJ&hl=en
+output:  
+   html_document:
+    css: bootstrap.css

@@ -1,0 +1,220 @@
+---
+title: "Covid-19 Flexdashboard (Data from 'Our World in Data'; pulled 2022/02/25)"
+author: "Chris Wojan"
+output: 
+  flexdashboard::flex_dashboard:
+    vertical_layout: fill
+---
+
+```{r setup, include = FALSE, echo = FALSE}
+library(tidyverse)
+library(lubridate)
+library(gt)
+library(paletteer)
+library(plotly)
+library(flexdashboard)
+
+#Working directory for .RMD
+knitr::opts_knit$set(echo = TRUE,
+                     root.dir = rprojroot::find_rstudio_root_file())
+
+#Controlling figure output in markdown
+knitr::opts_chunk$set(
+#  fig.height =   
+#  fig.width = 6,
+#  fig.asp = .5,
+#  out.width = "90%",
+#  out.height = 
+ fig.align  = "center",
+  cache = FALSE,
+  eval  = TRUE,
+  echo  = TRUE,
+  warning = FALSE
+)
+
+#Set Theme for ggplot2
+theme_set(theme_bw() + theme(plot.title = element_text(hjust = 0.5), legend.position = "bottom"))
+
+#Set Scientific notation output and decimal places for knitr
+options(scipen = 999)
+options(digits = 4)
+options(dplyr.summarise.inform = FALSE)
+```
+
+
+```{r data_read, include = FALSE}
+
+## Save filepath of data
+file_dir <- "./data/"
+
+## Gather names of data files
+covid19_file_list <- list.files(path = file_dir, pattern = "covid19")
+
+## Remove the aggregate data file name from list of file names
+covid19_file_list <- covid19_file_list[!str_detect(covid19_file_list, "aggregate")]
+
+## Create a tibble of metadata from these file names
+covid19_df <- tibble(
+  file_dir = file_dir,
+  file_name = covid19_file_list,
+  continent = str_split(covid19_file_list, pattern = "_", n = 2) %>%
+    map_chr(2) %>%
+    str_remove(pattern = ".csv"),
+  file_path = str_c(file_dir, covid19_file_list)
+) 
+
+## Iteratively read in all continental data
+covid19_nest <- covid19_df %>%
+  mutate(
+    data = map(.x = file_path, ~ read_csv(file = .x, show_col_types = FALSE))
+  )
+
+## Unnest each data set
+covid19_unnest <- covid19_nest %>%
+  unnest(cols = data)
+
+
+```
+
+```{r data_tidy, include = FALSE, echo = FALSE, message = FALSE, warning = FALSE}
+
+## Reformat variables and add useful new ones
+covid19_tidy <- covid19_unnest %>%
+  mutate(
+    ## Make sure date is in "Date" format (read_csv seems to have done this anyway)
+    date = ymd(date),  
+    ## Create variables for month and day of week
+    month = month(date,
+                  label = TRUE,
+                  abbr = TRUE),
+    day_of_week = wday(date, 
+                       label = TRUE,
+                       abbr = FALSE,
+                       week_start = getOption("lubridate.week.start", 1)),
+    ## Format the geographic categories as factors (continent and country)
+    continent = str_replace(continent, "_", " "),
+    continent = str_to_title(continent),
+    continent = factor(continent),
+    location = factor(location)
+    )
+
+## Create cumulative case and death values by country
+covid19_final <- covid19_tidy %>%
+  ## Nest by location
+  nest(-c(location)) %>%
+  mutate(
+    ## Calculate cumulative cases
+    cum_cases = map(.x = data,
+                    ~.x %>%
+                      pull(new_cases) %>%
+                      replace(x = ., list = is.na(.), values = 0) %>%
+                      cumsum()),
+    ## Calculate cumulative deaths
+    cum_deaths = map(.x = data,
+                    ~.x %>%
+                      pull(new_deaths) %>%
+                      replace(x = ., list = is.na(.), values = 0) %>%
+                      cumsum())
+  ) %>%
+  ## Unnest both the data AND the newly created variables (which are vectors)
+  unnest(cols = c(data, cum_cases, cum_deaths))
+
+## Summarize data across continents by date
+covid19_global_trend <- covid19_final %>%
+  group_by(date) %>%
+  summarise(cases = sum(new_cases, na.rm = TRUE),
+            case_avg = sum(new_cases_smoothed, na.rm = TRUE),
+            deaths = sum(new_deaths, na.rm = TRUE),
+            death_avg = sum(new_deaths_smoothed, na.rm = TRUE))
+
+## Summarize data across continents by date
+covid19_cont_trend <- covid19_final %>%
+  group_by(date, continent) %>%
+  summarise(cases = sum(new_cases, na.rm = TRUE),
+            case_avg = sum(new_cases_smoothed, na.rm = TRUE),
+            deaths = sum(new_deaths, na.rm = TRUE),
+            death_avg = sum(new_deaths_smoothed, na.rm = TRUE))
+
+```
+
+Column {data-width = 600}
+-------------------------------------
+
+### Cases
+
+```{r case_trend, echo = FALSE}
+
+## Plot cases over time
+case_trend_gg <- covid19_global_trend %>%
+  ggplot() +
+  geom_col(aes(x = date, y = cases), fill = "skyblue4") +
+  geom_line(aes(x = date, y = case_avg), lwd = 1, color = "gray20") +
+  scale_y_continuous(labels = scales::label_number(scale = 1/1000000, suffix = "M")) +
+  scale_x_date(date_breaks = "3 months",
+               date_minor_breaks = "1 month",
+               date_label = "%b %Y") +
+  labs(title = "Number of Global Covid 19 Cases over Time", 
+       x = "Date", y = "# of Cases")
+
+case_trend_ly <- ggplotly(case_trend_gg)
+
+case_trend_ly
+
+```
+
+Column {data-width = 400}
+-------------------------------------
+
+### Deaths
+
+```{r death_trend, echo = FALSE}
+
+## Plot deaths over time
+death_trend_gg <- covid19_global_trend %>%
+  ggplot() +
+  geom_col(aes(x = date, y = deaths), fill = "palegreen4") +
+  geom_line(aes(x = date, y = death_avg), lwd = 1, color = "gray20") +
+  scale_y_continuous(labels = scales::label_number(scale = 1/1000, suffix = "K")) +
+  scale_x_date(date_breaks = "3 months",
+               date_minor_breaks = "1 month",
+               date_label = "%b %Y") +
+  labs(title = "Number of Global Covid 19 Deaths over Time", 
+       x = "Date", y = "# of Deaths")
+
+death_trend_ly <- ggplotly(death_trend_gg)
+
+death_trend_ly
+
+```
+
+### Continent Cases
+
+```{r continent_cases, echo = FALSE}
+
+## Plot global case trends with continents colored
+cont_cases_gg <- covid19_cont_trend %>%
+  ggplot() +
+  #geom_col(aes(x = date, y = cases, fill = continent), alpha = 0.5) +
+  geom_line(aes(x = date, y = case_avg, color = continent), lwd = 0.5) +
+  geom_line(data = covid19_global_trend, aes(x = date, y = case_avg), lwd = 1, color = "black") +
+  scale_color_brewer(name = "Continent", palette = "Dark2") +
+  scale_fill_brewer(name = "Continent", palette = "Dark2") +
+  scale_y_continuous(labels = scales::label_number(scale = 1/1000000, suffix = "M")) +
+  scale_x_date(date_breaks = "3 months",
+               date_minor_breaks = "1 month",
+               date_label = "%b %Y") +
+  labs(title = "7-Day Rolling Average of Covid 19 Cases over Time", 
+       x = "Date", y = "# of Cases")
+
+
+cont_cases_ly <- ggplotly(cont_cases_gg)
+
+cont_cases_ly
+```
+
+```{r render_command, include = FALSE}
+
+#rmarkdown::render("flexdashboard.RMD", output_format = "flexdashboard::flex_dashboard")
+
+```
+
