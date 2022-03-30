@@ -1,5 +1,5 @@
 ---
-title: "Covid-19 Flexdashboard (Data from 'Our World in Data'; pulled 2022/02/25)"
+title: "Covid-19 Flexdashboard (Data from OurWorldinData.org; pulled 2022/02/25)"
 author: "Chris Wojan"
 output: 
   flexdashboard::flex_dashboard:
@@ -193,24 +193,23 @@ death_trend_ly
 
 ```{r continent_cases, echo = FALSE}
 
-## Plot global case trends with continents colored
-cont_cases_gg <- covid19_cont_trend %>%
-  ggplot() +
-  #geom_col(aes(x = date, y = cases, fill = continent), alpha = 0.5) +
-  geom_line(aes(x = date, y = case_avg, color = continent), lwd = 0.5) +
-  geom_line(data = covid19_global_trend, aes(x = date, y = case_avg), lwd = 1, color = "black") +
-  scale_color_brewer(name = "Continent", palette = "Dark2") +
-  scale_fill_brewer(name = "Continent", palette = "Dark2") +
-  scale_y_continuous(labels = scales::label_number(scale = 1/1000000, suffix = "M")) +
-  scale_x_date(date_breaks = "3 months",
-               date_minor_breaks = "1 month",
-               date_label = "%b %Y") +
-  labs(title = "7-Day Rolling Average of Covid 19 Cases over Time", 
-       x = "Date", y = "# of Cases")
-
-
-cont_cases_ly <- ggplotly(cont_cases_gg)
-
+## Plot continental trends in cases
+cont_cases_ly <- covid19_cont_trend %>%
+  ungroup() %>%
+  plot_ly(
+    x = ~date,
+    y = ~case_avg,
+    type = "scatter",
+    mode = "lines",
+    #size = 2,
+    color = ~continent
+  ) %>%
+  layout(
+    title  = "7-Day Rolling Average of Covid 19 Cases over Time",
+    xaxis  = list(title = "Date"),
+    yaxis = list(title = "# of Cases")
+  )
+  
 cont_cases_ly
 ```
 
