@@ -11,7 +11,7 @@ navbar:
     - text: "Professional Documents"
       menu:
         - text: "Curriculum Vitae"
-          href: ./files/wojan_cv_20220327.pdf
+          href: ./files/wojan_cv_20220330.pdf
     - text: "Recent Work"
       menu:
         - text: "Covid-19 Dashboard"
@@ -24,4 +24,4 @@ navbar:
       href: https://scholar.google.com/citations?user=In-rb2IAAAAJ&hl=en
 output:  
    html_document:
-    css: bootstrap.css
+    css: superhero.css
