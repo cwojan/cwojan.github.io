@@ -1,0 +1,142 @@
+---
+title: "Chris Wojan"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+PhD Student, University of Minnesota - Ecology, Evolution, and Behavior Program  
+Email: wojan002@umn.edu
+
+\
+
+#### EDUCATION  
+
+PhD in Ecology, Evolution, and Behavior, University of Minnesota, 2021 – present
+
+Master of Science in Biology, New Mexico State University, 2012 - 2014
+
+Bachelor of Science in Ecology and Environmental Biology, University of Wisconsin-Eau Claire, 2008 - 2012
+
+\
+
+#### PUBLICATIONS
+
+**Wojan, C.**, T. Thrasher, E. Lacey, and K. Clay. (2021) Distribution, Dynamics, and Diversity of Questing Ticks in the Lower Midwest. Journal of Medical Entomology 59(1): 273-282.
+
+Kendig A, Flory SL, Goss E, Holt R, Clay K, Harmon P, Lane B, Adhikari A, **Wojan C.** The Role of Pathogens in Plant Invasions. Anna Traveset and David M. Richardson, editors. Plant Invasions: The Role of Biotic Interactions. (2020) CAB International Press. Wallingford, UK.
+
+**Wojan C**, Knapp S, Mabry K. (2015) Spatial variation in population density affects dispersal behavior in brush mice. Ecology 96: 1661-1669.
+
+**Wojan C**, Devoe A, Merten E, Wellnitz T. (2014) Web-building spider response to a logjam in a northern Minnesota stream. American Midland Naturalist 172(1):185-190.
+
+\
+    
+#### EXPERIENCE
+
+Research Associate, Indiana University,                                                            January 2021-June 2021
+
+
+Research Associate in Field Biology, Indiana University,                     February 2018-December 2020
+
+
+Lead Temporary Field Technician, NEON, Inc.,                                         April 2017-November 2017
+
+
+Temporary Field Technician, NEON, Inc.,                                                 May 2016 – November 2016
+
+
+Research Assistant, Jornada Experimental Range,                                            June 2014-January 2016
+
+
+MS Candidate, New Mexico State University Biology Dept.,                          August 2012-May 2014
+
+
+Undergraduate Researcher, University of Wisconsin-Eau Claire,           September 2010-August 2012
+
+\
+
+#### PRESENTATIONS
+
+*Poster Presentations*
+
+99th Annual Ecological Society of America Meeting
+
+-	“Patterns of change in population density experienced by dispersing brush mice (Peromyscus boylii).”
+
+97th Annual Ecological Society of America Meeting
+
+-	“Do stream logjams influence riparian web spider density and distribution?”
+
+-	“Stochastic vs. niche-based processes: What drives lichen community assembly following fire disturbance?”
+
+-	“Does elevation modify aquatic export to riparian habitats?”
+
+96th Annual Ecological Society of America Meeting
+
+-	“Assembly of lichen communities on rocky shorelines of the north woods.”
+
+-	“Microhabitat scale influences on benthic macroinvertebrate communities.”
+
+*Oral Presentations*
+
+eeBehavior Group Seminar (University of Minnesota – Ecology, Evolution, and Behavior), Fall 2021
+
+-	“Patterns of change in population density experienced by dispersing brush mice (Peromyscus boylii).”
+
+Environmental Resilience Institute 2018 Fall Symposium at Indiana University
+
+-	“Project Vector Shield: Establishing a surveillance network to evaluate spatiotemporal patterns in ticks and mosquitoes.”
+
+72nd Midwest Fish and Wildlife Conference
+
+-	“Riparian spider response to logjam-mediated aquatic insect emergence.”
+
+UW-Eau Claire Biological Sciences Seminar Series, Spring 2012
+
+-	“Effects of altitude on aquatic/riparian arthropod communities in Andean streams.”
+
+-	“Fire mediates the importance of stochastic assembly in lichen communities of the BWCAW.”
+
+2nd Annual Provost’s Honors Symposium at UW-Eau Claire
+
+-	“Stochastic vs. niche-based processes: What drives lichen community assembly following fire disturbance?”
+
+\
+
+#### AWARDS AND FELLOWSHIPS
+
+University of Minnesota Excellence Fellowship, 2021 - Present  
+New Mexico State University Tuition Fellowship, 2012-2014  
+University of Wisconsin-Eau Claire Outstanding Senior Award, 2012  
+University of Wisconsin-Eau Claire CIE International Fellowship, 2012  
+3rd Place – UW-Eau Claire Student Research Day, Earth and Life Sciences, 2011  
+Ralph Duxbury Scholarship, UW-Eau Claire Biology Dept., 2011  
+Terry Balding Scholarship, UW-Eau Claire Biology Dept., 2011  
+UW Eau Claire Office of Research and Sponsored Programs Grants (4), 2010, 2011, 2011, 2012
+
+\
+
+#### TEACHING EXPERIENCE
+
+Lab Instructor, New Mexico State University Biology Dept., 2012-2014
+
+\
+
+#### MENTORING EXPERIENCE
+
+Field Guides Mentor, University of Minnesota 2022 – Present
+
+\
+
+#### SERVICE AND ORGANIZATION INVOLVEMENT
+
+Field Guides Mentor, University of Minnesota 2022 - Present  
+Volunteer Mobile Meals Delivery Person, Wausau, WI 2017  
+NMSU Ecology Club, Member 2013 – 2014  
+NMSU Student Chapter of the Wildlife Society, Member 2013 - 2014  
+Volunteer PetSmart Cat Caretaker, Las Cruces, NM 2012-2013  
+NMSU Biology Graduate Student Organization, Member 2012 – 2014  
+UW-Eau Claire Reef Team, Member 2010-2012

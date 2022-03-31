@@ -10,8 +10,10 @@ navbar:
       href: about.html
     - text: "Professional Documents"
       menu:
-        - text: "Curriculum Vitae"
+        - text: "Curriculum Vitae (pdf)"
           href: ./files/wojan_cv_20220330.pdf
+        - text: "Curriculum Vitae (html)"
+          href: cv.html
     - text: "Recent Work"
       menu:
         - text: "Covid-19 Dashboard"
