@@ -1,0 +1,99 @@
+---
+title: "Spatial Dashboard"
+author: "Chris Wojan"
+date: "4/12/2022"
+output:
+  flexdashboard::flex_dashboard:
+    vertical_layout: fill
+---
+
+```{r setup, include = FALSE, echo = FALSE}
+library(tidyverse)
+library(lubridate)
+library(gt)
+library(paletteer)
+library(plotly)
+library(flexdashboard)
+library(osmdata)
+library(sf)
+library(ggmap)
+library(tidycensus)
+library(leaflet)
+library(ggthemes)
+library(viridis)
+library(htmltools)
+
+#Working directory for .RMD
+knitr::opts_knit$set(echo = TRUE,
+                     root.dir = rprojroot::find_rstudio_root_file())
+
+#Controlling figure output in markdown
+knitr::opts_chunk$set(
+#  fig.height =   
+#  fig.width = 6,
+#  fig.asp = .5,
+#  out.width = "90%",
+#  out.height = 
+ fig.align  = "center",
+  cache = FALSE,
+  eval  = TRUE,
+  echo  = TRUE,
+  warning = FALSE
+)
+
+#Set Theme for ggplot2
+theme_set(theme_bw() + theme(plot.title = element_text(hjust = 0.5), legend.position = "bottom"))
+
+#Set Scientific notation output and decimal places for knitr
+options(scipen = 999)
+options(digits = 4)
+options(dplyr.summarise.inform = FALSE)
+```
+
+Column {data-width = 600}
+-------------------------------------
+
+```{r mn_leaflet, echo = FALSE}
+
+mn_bb <- getbb(place_name = "minnesota", featuretype = "state")
+
+osm_historic_sf_df <- opq(bbox = mn_bb) %>%
+  add_osm_feature(key = "historic", value = c("church", "fort", "house")) %>%
+  osmdata_sf()
+
+#Extract the relevant sf data frame
+mn_historic_polygons_df <- osm_historic_sf_df$osm_polygons %>% 
+  janitor::clean_names() %>%
+  filter(!is.na(historic)) %>% #only retain 'valid' tags
+  dplyr::select(osm_id, name, addr_city, historic, geometry) %>%
+  mutate(historic = str_to_title(historic) %>% as_factor(),
+         text_label = ifelse(is.na(addr_city),
+                             str_c(name, 
+                             "<br/>Building Type: ", historic),
+                             str_c(name, 
+                             "<br/>Building Type: ", historic,
+                             "<br/>City:", addr_city))
+         )
+
+#Extract the levels/order of shop type factor
+historic_types <- levels(mn_historic_polygons_df$historic)
+historic_palette <- c("#1b9e77", "#d95f02", "#7570b3")
+
+#Initialize our colour pallete (discrete in this case)
+leaflet_palette <- colorFactor(palette = historic_palette, domain = historic_types)
+
+leaflet(data = mn_historic_polygons_df) %>%
+  addProviderTiles('CartoDB.Positron') %>% 
+  addPolygons(
+    color = ~leaflet_palette(historic_types),
+    label = ~map(text_label, HTML)
+  ) %>%
+  addLegend(
+    title    = "Building Type",
+    position = "bottomright",
+    colors   = historic_palette,
+    labels   = historic_types 
+  )
+
+```
+
