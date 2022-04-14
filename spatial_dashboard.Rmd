@@ -53,6 +53,8 @@ options(dplyr.summarise.inform = FALSE)
 Column {data-width = 600}
 -------------------------------------
 
+### MN Historic Buildings
+
 ```{r mn_leaflet, echo = FALSE}
 
 mn_bb <- getbb(place_name = "minnesota", featuretype = "state")
@@ -72,28 +74,121 @@ mn_historic_polygons_df <- osm_historic_sf_df$osm_polygons %>%
                              "<br/>Building Type: ", historic),
                              str_c(name, 
                              "<br/>Building Type: ", historic,
-                             "<br/>City:", addr_city))
+                             "<br/>City: ", addr_city))
          )
 
 #Extract the levels/order of shop type factor
 historic_types <- levels(mn_historic_polygons_df$historic)
 historic_palette <- c("#1b9e77", "#d95f02", "#7570b3")
 
-#Initialize our colour pallete (discrete in this case)
+#Initialize our color palette (discrete in this case)
 leaflet_palette <- colorFactor(palette = historic_palette, domain = historic_types)
 
 leaflet(data = mn_historic_polygons_df) %>%
-  addProviderTiles('CartoDB.Positron') %>% 
+  addProviderTiles(providers$Stamen.TonerLite) %>% 
   addPolygons(
     color = ~leaflet_palette(historic_types),
     label = ~map(text_label, HTML)
   ) %>%
   addLegend(
-    title    = "Building Type",
+    title = "Building Type",
     position = "bottomright",
-    colors   = historic_palette,
-    labels   = historic_types 
+    colors = historic_palette,
+    labels = historic_types 
   )
 
 ```
 
+Column {data-width = 400}
+-------------------------------------
+
+```{r hennepin_ggplotly, echo = FALSE, message = FALSE, warning = FALSE}
+
+v20 <- load_variables(2020, "acs5", cache = TRUE)
+
+#Call the ACS API, returns a sf object
+hennepin_age_df <- get_acs(
+  geography = "block group",
+  variables = "B01002_001", #code for median age
+  state = "MN",
+  county = "Hennepin",
+  year = 2020,
+  geometry = TRUE
+)
+
+
+
+hennepin_age_plot_df <- hennepin_age_df %>%
+  mutate(
+    name_split = str_split(NAME, ","),
+    tract = name_split %>%
+      map_chr(2) %>%
+      str_remove("Census Tract "),
+    block_group = name_split %>% 
+      map_chr(1) %>%
+      str_remove("Block Group "),
+    text_label = str_c("Tract: ",
+                       tract,
+                       "\nBlock Group: ",
+                       block_group,
+                       "\nMedian Age: ",
+                       estimate
+                       )
+  )
+
+
+hennepin_bb <- getbb("hennepin")
+
+hennepin_basemap <- get_map(location = hennepin_bb,
+                            source   = "google",
+                            maptype  = "roadmap",
+                            crop = TRUE
+                            )
+
+hennepin_base_gg <- ggmap(hennepin_basemap) +
+  theme_map()
+
+hennepin_base_coord <- st_crs(hennepin_base_gg)
+hennepin_swedes_coord <- st_crs(hennepin_swedes_df)
+
+
+
+hennepin_age_gg <- hennepin_base_gg +
+  geom_sf(data = hennepin_age_plot_df,
+          aes(fill = estimate, text = text_label, color = NAME), 
+          size = 0.1,
+          inherit.aes = FALSE) +
+  labs(title = "Hennepin County, MN - Median Age (2020 ACS)") +
+  scale_fill_viridis_c(name = "Median Age") +
+  theme_map() +
+  theme(plot.title = element_text(size  = 16,
+                                  hjust = 0.5),
+    legend.text = element_text(size = 16),
+    legend.title = element_text(size = 16),
+    legend.position = "right")
+
+
+hennepin_age_gg
+
+hennepin_plotly <- ggplotly(hennepin_age_gg,
+                            tooltip = "text")
+
+hennepin_plotly$x$data %>% map_chr(~ifelse("text" %in% names(.x), .x$text, NA)) -> hover_text_vec
+head(hover_text_vec)
+tail(hover_text_vec)
+hennepin_plotly$x$data[[3]]$hoverinfo <- "skip"
+
+hennepin_plotly %>%
+  style(hoveron = "fills",
+      line.color = toRGB("black"),
+      traces = seq.int(4, length(hennepin_plotly$x$data) - 1)) %>%
+  hide_legend
+
+```
+
+
+```{r render_command, include = FALSE}
+
+#rmarkdown::render("spatial_dashboard.RMD", output_format = "flexdashboard::flex_dashboard")
+
+```
