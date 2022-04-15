@@ -1,10 +1,9 @@
 ---
 title: "Spatial Dashboard"
 author: "Chris Wojan"
-date: "4/12/2022"
 output:
   flexdashboard::flex_dashboard:
-    orientation: rows
+    vertical_layout: fill
 ---
 
 ```{r setup, include = FALSE, echo = FALSE}
@@ -50,7 +49,7 @@ options(digits = 4)
 options(dplyr.summarise.inform = FALSE)
 ```
 
-Row
+Column {data-width = 400}
 -------------------------------------
 
 ### MN Historic Buildings
@@ -103,6 +102,9 @@ leaflet(data = mn_historic_polygons_df) %>%
   )
 
 ```
+
+Column {data-width = 600}
+-------------------------------------
 
 ###
 
