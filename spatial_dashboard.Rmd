@@ -4,7 +4,7 @@ author: "Chris Wojan"
 date: "4/12/2022"
 output:
   flexdashboard::flex_dashboard:
-    vertical_layout: fill
+    orientation: rows
 ---
 
 ```{r setup, include = FALSE, echo = FALSE}
@@ -50,15 +50,18 @@ options(digits = 4)
 options(dplyr.summarise.inform = FALSE)
 ```
 
-Column {data-width = 600}
+Row
 -------------------------------------
 
 ### MN Historic Buildings
 
 ```{r mn_leaflet, echo = FALSE}
 
+## Get a bounding box for the state of MN 
 mn_bb <- getbb(place_name = "minnesota", featuretype = "state")
 
+## Grab hisotric buildings of three types from within MN
+## (although some buildings in WI are grabbed as well due to presumed data entry errors)
 osm_historic_sf_df <- opq(bbox = mn_bb) %>%
   add_osm_feature(key = "historic", value = c("church", "fort", "house")) %>%
   osmdata_sf()
@@ -66,7 +69,8 @@ osm_historic_sf_df <- opq(bbox = mn_bb) %>%
 #Extract the relevant sf data frame
 mn_historic_polygons_df <- osm_historic_sf_df$osm_polygons %>% 
   janitor::clean_names() %>%
-  filter(!is.na(historic)) %>% #only retain 'valid' tags
+  filter(!is.na(historic)) %>% ## only retain 'valid' tags
+  filter(osm_id != "246368346") %>% ## Remove erroneous polygon in WI
   dplyr::select(osm_id, name, addr_city, historic, geometry) %>%
   mutate(historic = str_to_title(historic) %>% as_factor(),
          text_label = ifelse(is.na(addr_city),
@@ -77,15 +81,16 @@ mn_historic_polygons_df <- osm_historic_sf_df$osm_polygons %>%
                              "<br/>City: ", addr_city))
          )
 
-#Extract the levels/order of shop type factor
+## Create variables for the color palette
 historic_types <- levels(mn_historic_polygons_df$historic)
 historic_palette <- c("#1b9e77", "#d95f02", "#7570b3")
 
-#Initialize our color palette (discrete in this case)
+## Initialize the color palette
 leaflet_palette <- colorFactor(palette = historic_palette, domain = historic_types)
 
+## Create the leaflet
 leaflet(data = mn_historic_polygons_df) %>%
-  addProviderTiles(providers$Stamen.TonerLite) %>% 
+  addProviderTiles(providers$CartoDB.Positron) %>% 
   addPolygons(
     color = ~leaflet_palette(historic_types),
     label = ~map(text_label, HTML)
@@ -99,17 +104,17 @@ leaflet(data = mn_historic_polygons_df) %>%
 
 ```
 
-Column {data-width = 400}
--------------------------------------
+###
 
-```{r hennepin_ggplotly, echo = FALSE, message = FALSE, warning = FALSE}
+```{r hennepin_age_ggplotly, echo = FALSE, message = FALSE, warning = FALSE}
 
+## Create a reference of variables
 v20 <- load_variables(2020, "acs5", cache = TRUE)
 
-#Call the ACS API, returns a sf object
+## Call the ACS API, grab median age data by block group
 hennepin_age_df <- get_acs(
   geography = "block group",
-  variables = "B01002_001", #code for median age
+  variables = "B01002_001", ## Code for median age
   state = "MN",
   county = "Hennepin",
   year = 2020,
@@ -117,7 +122,7 @@ hennepin_age_df <- get_acs(
 )
 
 
-
+## Create some helpful columns for labelling block groups
 hennepin_age_plot_df <- hennepin_age_df %>%
   mutate(
     name_split = str_split(NAME, ","),
@@ -136,23 +141,24 @@ hennepin_age_plot_df <- hennepin_age_df %>%
                        )
   )
 
-
+## Grab the bounding box for Hennepin County, MN
 hennepin_bb <- getbb("hennepin")
 
+## Grab a basemap around Hennepin County
 hennepin_basemap <- get_map(location = hennepin_bb,
                             source   = "google",
                             maptype  = "roadmap",
                             crop = TRUE
                             )
-
+## Create a ggplot/ggmap object of the basemap
 hennepin_base_gg <- ggmap(hennepin_basemap) +
   theme_map()
 
+## Take a look at the coordinate systems
 hennepin_base_coord <- st_crs(hennepin_base_gg)
-hennepin_swedes_coord <- st_crs(hennepin_swedes_df)
+hennepin_age_plot_coord <- st_crs(hennepin_age_plot_df)
 
-
-
+## Create a ggplot of the median age data by block group over the basemap
 hennepin_age_gg <- hennepin_base_gg +
   geom_sf(data = hennepin_age_plot_df,
           aes(fill = estimate, text = text_label, color = NAME), 
@@ -161,31 +167,123 @@ hennepin_age_gg <- hennepin_base_gg +
   labs(title = "Hennepin County, MN - Median Age (2020 ACS)") +
   scale_fill_viridis_c(name = "Median Age") +
   theme_map() +
-  theme(plot.title = element_text(size  = 16,
-                                  hjust = 0.5),
-    legend.text = element_text(size = 16),
-    legend.title = element_text(size = 16),
-    legend.position = "right")
+  theme(legend.position = "right")
 
-
-hennepin_age_gg
-
+## Transform into plotly
 hennepin_plotly <- ggplotly(hennepin_age_gg,
                             tooltip = "text")
 
+## Investigate the traces and skip the basemap's hoverinfo
 hennepin_plotly$x$data %>% map_chr(~ifelse("text" %in% names(.x), .x$text, NA)) -> hover_text_vec
-head(hover_text_vec)
-tail(hover_text_vec)
+#head(hover_text_vec)
+#tail(hover_text_vec)
 hennepin_plotly$x$data[[3]]$hoverinfo <- "skip"
 
+## Display the plotly with hovering labels by fill
+## This had an issue due to multiple fills being identical
+## Troubleshooting code adapted from:
+## https://github.com/plotly/plotly.R/issues/1641
 hennepin_plotly %>%
   style(hoveron = "fills",
-      line.color = toRGB("black"),
-      traces = seq.int(4, length(hennepin_plotly$x$data) - 1)) %>%
+        line.color = toRGB("black"),
+        traces = seq.int(4, length(hennepin_plotly$x$data) - 1)) %>%
   hide_legend
 
 ```
 
+###
+
+```{r hennepin_age_sex_ggplotly, echo = FALSE, message = FALSE, warning = FALSE}
+
+## Call the ACS API, grab median age data by sex by block group
+hennepin_age_sex_df <- get_acs(
+  geography = "block group",
+  variables = c("B01002_002","B01002_003"), #codes for median ages by sex
+  state = "MN",
+  county = "Hennepin",
+  year = 2020,
+  geometry = TRUE
+)
+
+## Code to help with pivot_wider on sf objects adapted from:
+## https://community.rstudio.com/t/pivoting-sf-dataframe-to-make-the-data-a-suitable-for-creating-maps/111790
+
+## Create a geometry-less data frame of the age data
+hennepin_age_sex_nogeom <- hennepin_age_sex_df
+hennepin_age_sex_nogeom$geometry <- NULL
+
+## Create a geometry only sf object
+hennepin_age_sex_geom <- hennepin_age_sex_df %>%
+  select(GEOID, NAME, geometry) %>%
+  unique()
+
+## Widen the median age data for easier calculations and labelling
+hennepin_age_sex_wide <- hennepin_age_sex_nogeom %>%
+  select(-moe) %>%
+  pivot_wider(names_from = variable, values_from = estimate)
+
+## Join wide data with geometry
+hennepin_age_sex_join <- left_join(hennepin_age_sex_geom, hennepin_age_sex_wide, 
+                                   by = c("GEOID","NAME"))
+
+## Create some helpful columns for labelling block groups
+hennepin_age_sex_plot_df <- hennepin_age_sex_join %>%
+  rename(male_age = B01002_002, female_age = B01002_003) %>%
+  mutate(
+    sex_diff = round(male_age - female_age, digits = 1),
+    name_split = str_split(NAME, ","),
+    tract = name_split %>%
+      map_chr(2) %>%
+      str_remove("Census Tract "),
+    block_group = name_split %>% 
+      map_chr(1) %>%
+      str_remove("Block Group "),
+    text_label = str_c("Tract: ",
+                       tract,
+                       "\nBlock Group: ",
+                       block_group,
+                       "\nMedian Male Age: ",
+                       male_age,
+                       "\nMedian Female Age: ",
+                       female_age,
+                       "\nMedian Age Difference (M - F): ",
+                       sex_diff
+                       )
+  )
+
+## Create a ggplot of the median age data by sex by block group over the basemap
+hennepin_age_sex_gg <- hennepin_base_gg +
+  geom_sf(data = hennepin_age_sex_plot_df,
+          aes(fill = sex_diff, text = text_label, color = NAME), 
+          size = 0.1,
+          inherit.aes = FALSE) +
+  labs(title = "Hennepin County, MN - Median Age by Sex (2020 ACS)") +
+  scale_fill_viridis_c(name = "Median Age\nDifference\n(Male - Female)") +
+  theme_map() +
+  theme(legend.position = "right")
+
+## Transform into plotly
+hennepin_sex_plotly <- ggplotly(hennepin_age_sex_gg,
+                                tooltip = "text")
+
+## Investigate the traces and skip the basemap's hoverinfo
+hennepin_sex_plotly$x$data %>% 
+  map_chr(~ifelse("text" %in% names(.x), .x$text, NA)) -> hover_text_vec
+#head(hover_text_vec)
+#tail(hover_text_vec)
+hennepin_sex_plotly$x$data[[3]]$hoverinfo <- "skip"
+
+## Display the plotly with hovering labels by fill
+## This had an issue due to multiple fills being identical
+## Troubleshooting code adapted from:
+## https://github.com/plotly/plotly.R/issues/1641
+hennepin_sex_plotly %>%
+  style(hoveron = "fills",
+        line.color = toRGB("black"),
+        traces = seq.int(4, length(hennepin_sex_plotly$x$data) - 1)) %>%
+  hide_legend
+
+```
 
 ```{r render_command, include = FALSE}
 
