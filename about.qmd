@@ -1,0 +1,26 @@
+---
+title: "Chris Wojan"
+about:
+  template: trestles
+  image: images/profile_pic.jpg
+  links:
+    - icon: github
+      text: Github
+      href: https://github.com/cwojan
+    - icon: mortarboard-fill
+      text: Google Scholar
+      href: https://scholar.google.com/citations?user=In-rb2IAAAAJ&hl=en
+---
+
+I study disease ecology in Meggan Craft's lab at the University of Minnesota. Particularly, I am interested in the spatial dynamics of disease transmission and multi-host, environmental macroparasites. In the field, I collect ticks (I'm doing just that in the photo to the left!), and in the office I think about ways to model parasite clustering and its influence on host populations. I also love to design apps and games to use for ecology education and outreach! When I'm not doing any of those things, I might be goofing around on my guitar 🎸, going for a jog 🏃🏼, or playing some retro videogames 🎮.
+
+### Education
+
+| **University of Minnesota** \| *2021 - Present*
+| - PhD in Ecology, Evolution, and Behavior
+
+| **New Mexico State University** \| *2012 - 2014*
+| - MS in Biology
+
+| **University of Wisconsin - Eau Claire** \| *2008 - 2012*
+| - BS in Ecology and Environmental Biology
