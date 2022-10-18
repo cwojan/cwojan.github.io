@@ -1,0 +1,23 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Hello!",
+    "section": "",
+    "text": "If you want to learn more about me, you can check out the “About Me” tab. If you want to learn even more about me, you can download my CV (when it’s uploaded…)!"
+  },
+  {
+    "objectID": "forests_foragers.html",
+    "href": "forests_foragers.html",
+    "title": "Forest and Foragers",
+    "section": "",
+    "text": "Forests and Foragers is an educational card and dice game that I am developing wherein you take on the role of a mouse foraging in the forest for berries while avoiding hungry ticks and an even hungrier fox. It aims to demonstrate the concepts of foraging theory, landscapes of fear and disgust, and a little bit about tick ecology. A prototype app is available below, and the instructions can be found in PDF form here."
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "Chris Wojan",
+    "section": "",
+    "text": "Education\nUniversity of Minnesota | 2021 - Present\n- PhD in Ecology, Evolution, and Behavior\nNew Mexico State University | 2012 - 2014\n- MS in Biology\nUniversity of Wisconsin - Eau Claire | 2008 - 2012\n- BS in Ecology and Environmental Biology"
+  }
+]
