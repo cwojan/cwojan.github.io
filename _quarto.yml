@@ -10,10 +10,11 @@ website:
         text: Home
       - href: about.qmd
         text: About Me 
-      - text: Games
-        menu: 
-          - href: forests_foragers.qmd
-            text: Forests and Foragers
+      - href: research.qmd
+        text: Research
+      - href: outreach.qmd
+        text: Outreach
+      
 format:
   html:
     theme: minty

@@ -5,6 +5,6 @@ about:
   image: images/tree.jpg
 ---
 
-Welcome to my website! My name is Chris Wojan and I am an ecology PhD Student at the University of Minnesota (and a wannabe Tetris master).
+Welcome to my website! My name is Chris Wojan and I am an ecology PhD Candidate at the University of Minnesota (and a wannabe Tetris master).
 
-If you want to learn more about me, you can check out the "About Me" tab. If you want to learn even **more** about me, you can download my CV (when it's uploaded...)!
+If you want to learn more about me, you can check out the "About Me" tab. If you want to learn even **more** about me, you can download my [CV](files/Wojan_CV_Jul24.pdf)!

@@ -1,0 +1,16 @@
+---
+title: "Outreach"
+about:
+  template: solana
+  image: images/bell_booth.jpeg
+---
+
+There are many fun ways to communicate science broadly, and I am interested in making games and films to do so!
+
+### Games
+
+Since starting my PhD research at UMN, I have been developing a tabletop dice/card game based on my research called "Forests and Foragers." In this game, the player is tasked with guiding a small mammal through a sequence of event cards (predator encounters, foraging sites, etc.) with the aim of gathering enough food before winter, while avoiding both predators and parasites. I deployed a prototype at the Bell Museum's SciPride event in June 2024 (see photo to the right!). With a bit more tweaking, I hope to provide pdf files for anyone to download, print, and play the game at home or in classrooms. Check back later for updates!
+
+### Film
+
+As a bit of a movie geek, I am interested in the similarities in the way ecologists and filmmakers both make observations. Drawing from the "romantic" ecology writing of Henry David Thoreau, John Muir, and Aldo Leopold, as well as the "transcendental" filmmaking style of Yasujiro Ozu and Robert Bresson, I am currently working on a filmmaking project at Cedar Creek Ecosystem Science Reserve with a group of interns. Soon I'll be able to link you to the films we produce!

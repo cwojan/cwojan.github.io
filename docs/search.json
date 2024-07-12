@@ -1,23 +1,30 @@
 [
   {
+    "objectID": "outreach.html",
+    "href": "outreach.html",
+    "title": "Outreach",
+    "section": "",
+    "text": "There are many fun ways to communicate science broadly, and I am interested in making games and films to do so!\n\nGames\nSince starting my PhD research at UMN, I have been developing a tabletop dice/card game based on my research called “Forests and Foragers.” In this game, the player is tasked with guiding a small mammal through a sequence of event cards (predator encounters, foraging sites, etc.) with the aim of gathering enough food before winter, while avoiding both predators and parasites. I deployed a prototype at the Bell Museum’s SciPride event in June 2024 (see photo to the right!). With a bit more tweaking, I hope to provide pdf files for anyone to download, print, and play the game at home or in classrooms. Check back later for updates!\n\n\nFilm\nAs a bit of a movie geek, I am interested in the similarities in the way ecologists and filmmakers both make observations. Drawing from the “romantic” ecology writing of Henry David Thoreau, John Muir, and Aldo Leopold, as well as the “transcendental” filmmaking style of Yasujiro Ozu and Robert Bresson, I am currently working on a filmmaking project at Cedar Creek Ecosystem Science Reserve with a group of interns. Soon I’ll be able to link you to the films we produce!"
+  },
+  {
     "objectID": "index.html",
     "href": "index.html",
     "title": "Hello!",
     "section": "",
-    "text": "If you want to learn more about me, you can check out the “About Me” tab. If you want to learn even more about me, you can download my CV (when it’s uploaded…)!"
+    "text": "Welcome to my website! My name is Chris Wojan and I am an ecology PhD Candidate at the University of Minnesota (and a wannabe Tetris master).\nIf you want to learn more about me, you can check out the “About Me” tab. If you want to learn even more about me, you can download my CV!"
   },
   {
-    "objectID": "forests_foragers.html",
-    "href": "forests_foragers.html",
-    "title": "Forest and Foragers",
+    "objectID": "research.html",
+    "href": "research.html",
+    "title": "Research",
     "section": "",
-    "text": "Forests and Foragers is an educational card and dice game that I am developing wherein you take on the role of a mouse foraging in the forest for berries while avoiding hungry ticks and an even hungrier fox. It aims to demonstrate the concepts of foraging theory, landscapes of fear and disgust, and a little bit about tick ecology. A prototype app is available below, and the instructions can be found in PDF form here."
+    "text": "In the wide world of parasite ecology, I am primarily interested in spatial patterns, movement, and parasite aggregation. My past experiences have been in the realm of empirical observation, but recently I have developed a greater interest in theoretical modeling.\n\nHost-Parasite Interactions In Space\nIf a parasite is to infect a host, they first have to encounter one another. How they encounter each other can vary depending on the spatial distribution of the parasite and the movement of the host. I have developed a spatially-explicit agent-based model to explore the role of spatial aggregation of parasites in driving the parasite burdens experienced by hosts. My results show that spatially aggregated parasites lead to overdispersed distributions of parasite burdens on hosts (i.e., many hosts have few parasites, while few hosts have many parasites). This is especially true when parasite density is low-to-moderate and host recovery is slow. Parasite burden distributions can be important for inferring vector-borne disease transmission and host population mortality.\n\n\nTicks and Fire\nOne parasite of great interest to humans is the black-legged tick (Ixodes scapularis), the primary vector of Lyme disease in the Midwestern and Eastern United States. As such, they are a great study subject for my interest in parasite spatial ecology. Specifically, I have been investigating the abundance of black-legged ticks across a gradient of prescribed burn frequencies at the Cedar Creek Ecosystem Science Reserve (that’s what I’m doing in the picture to the right!). Prescribed fire may be an effective landscape-scale control measure to curb Lyme disease incidence in humans, but the details are still unclear."
   },
   {
     "objectID": "about.html",
     "href": "about.html",
     "title": "Chris Wojan",
     "section": "",
-    "text": "Education\nUniversity of Minnesota | 2021 - Present\n- PhD in Ecology, Evolution, and Behavior\nNew Mexico State University | 2012 - 2014\n- MS in Biology\nUniversity of Wisconsin - Eau Claire | 2008 - 2012\n- BS in Ecology and Environmental Biology"
+    "text": "I study parasite ecology in Meggan Craft’s lab at the University of Minnesota. Particularly, I am interested in the spatial dynamics of host-parasite interactions, particularly with multi-host, environmental macroparasites. In the field I collect ticks, and in the office I think about ways to model parasite clustering and its influence on host populations. I also love to design apps and games to use for ecology education and outreach! When I’m not doing any of those things, I might be goofing around on my guitar 🎸 or playing some retro video games 🎮.\n\nEducation\nUniversity of Minnesota | 2021 - Present\n- PhD in Ecology, Evolution, and Behavior\nNew Mexico State University | 2012 - 2014\n- MS in Biology\nUniversity of Wisconsin - Eau Claire | 2008 - 2012\n- BS in Ecology and Environmental Biology"
   }
 ]

@@ -2,7 +2,7 @@
 title: "Chris Wojan"
 about:
   template: trestles
-  image: images/profile_pic.jpg
+  image: images/dragonfly.jpg
   links:
     - icon: github
       text: Github
@@ -12,7 +12,7 @@ about:
       href: https://scholar.google.com/citations?user=In-rb2IAAAAJ&hl=en
 ---
 
-I study disease ecology in Meggan Craft's lab at the University of Minnesota. Particularly, I am interested in the spatial dynamics of disease transmission and multi-host, environmental macroparasites. In the field, I collect ticks (I'm doing just that in the photo to the left!), and in the office I think about ways to model parasite clustering and its influence on host populations. I also love to design apps and games to use for ecology education and outreach! When I'm not doing any of those things, I might be goofing around on my guitar 🎸, going for a jog 🏃🏼, or playing some retro videogames 🎮.
+I study parasite ecology in Meggan Craft's [lab](https://mcraftlab.wordpress.com/) at the University of Minnesota. Particularly, I am interested in the spatial dynamics of host-parasite interactions, particularly with multi-host, environmental macroparasites. In the field I collect ticks, and in the office I think about ways to model parasite clustering and its influence on host populations. I also love to design apps and games to use for ecology education and outreach! When I'm not doing any of those things, I might be goofing around on my guitar 🎸 or playing some retro video games 🎮.
 
 ### Education
 

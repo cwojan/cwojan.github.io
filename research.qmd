@@ -1,0 +1,16 @@
+---
+title: "Research"
+about:
+  template: solana
+  image: images/tick_drag.jpg
+---
+
+In the wide world of parasite ecology, I am primarily interested in spatial patterns, movement, and parasite aggregation. My past experiences have been in the realm of empirical observation, but recently I have developed a greater interest in theoretical modeling.
+
+### Host-Parasite Interactions In Space
+
+If a parasite is to infect a host, they first have to encounter one another. How they encounter each other can vary depending on the spatial distribution of the parasite and the movement of the host. I have developed a spatially-explicit agent-based model to explore the role of spatial aggregation of parasites in driving the parasite burdens experienced by hosts. My results show that spatially aggregated parasites lead to overdispersed distributions of parasite burdens on hosts (i.e., many hosts have few parasites, while few hosts have many parasites). This is especially true when parasite density is low-to-moderate and host recovery is slow. Parasite burden distributions can be important for inferring vector-borne disease transmission and host population mortality.
+
+### Ticks and Fire
+
+One parasite of great interest to humans is the black-legged tick (*Ixodes scapularis*), the primary vector of Lyme disease in the Midwestern and Eastern United States. As such, they are a great study subject for my interest in parasite spatial ecology. Specifically, I have been investigating the abundance of black-legged ticks across a gradient of prescribed burn frequencies at the Cedar Creek Ecosystem Science Reserve (that's what I'm doing in the picture to the right!). Prescribed fire may be an effective landscape-scale control measure to curb Lyme disease incidence in humans, but the details are still unclear.
